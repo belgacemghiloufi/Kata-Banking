@@ -12,7 +12,7 @@ public class DateHelper {
 	}
 
 	protected LocalDate getToday() {
-		return null;
+		return LocalDate.now();
 	}
 
 }
