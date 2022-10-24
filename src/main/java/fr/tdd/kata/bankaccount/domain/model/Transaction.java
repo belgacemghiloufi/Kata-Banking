@@ -14,6 +14,18 @@ public class Transaction {
 		this.operationType = operationType;
 	}
 
+	public String getDate() {
+		return date;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public OperationType getOperationType() {
+		return operationType;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
