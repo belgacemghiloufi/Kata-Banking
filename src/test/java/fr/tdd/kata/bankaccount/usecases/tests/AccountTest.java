@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -25,7 +26,7 @@ import fr.tdd.kata.bankaccount.domain.ports.TransactionRepository;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountTest {
 
-	private static final String TODAY = "22/10/2022";
+	private static final String TODAY = "24/10/2022";
 	private Account account;
 	@Mock private TransactionRepository transactionRepository;
 	@Mock private StatementPrinter statementPrinter;
@@ -39,6 +40,8 @@ public class AccountTest {
 	public void 
 	should_increase_balance_when_deposit_is_made() {
 		BigDecimal amount = new BigDecimal(100.00);
+		List<Transaction> transactions = List.of(new Transaction(TODAY, amount, OperationType.DEPOSIT));
+		when(transactionRepository.getTransactions()).thenReturn(transactions);
 		account.deposit(amount);
 		verify(transactionRepository).addTransaction(amount, OperationType.DEPOSIT);
 		assertThat(account.getBalance(), is(amount));
@@ -57,6 +60,9 @@ public class AccountTest {
 		BigDecimal depositAmount = new BigDecimal(100.00);
 		BigDecimal withdrawAmount = new BigDecimal(50.00);
 		BigDecimal leftAmount = new BigDecimal(50.00);
+		List<Transaction> transactions = 
+				List.of(new Transaction(TODAY, depositAmount, OperationType.DEPOSIT), new Transaction(TODAY, withdrawAmount, OperationType.WITHDRAWAL));
+		when(transactionRepository.getTransactions()).thenReturn(transactions);
 		account.deposit(depositAmount);
 		account.withdraw(withdrawAmount);
 		verify(transactionRepository).addTransaction(withdrawAmount, OperationType.WITHDRAWAL);
