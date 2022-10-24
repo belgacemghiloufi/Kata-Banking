@@ -1,4 +1,4 @@
-package fr.tdd.kata.bankaccount.domain;
+package fr.tdd.kata.bankaccount.domain.model;
 
 import java.math.BigDecimal;
 

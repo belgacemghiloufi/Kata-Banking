@@ -1,8 +1,6 @@
-package fr.tdd.kata.bankaccount.domain;
+package fr.tdd.kata.bankaccount.domain.model;
 
 import java.math.BigDecimal;
-
-import fr.tdd.kata.bankaccount.domain.model.OperationType;
 
 public class Transaction {
 

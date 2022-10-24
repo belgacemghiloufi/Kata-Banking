@@ -1,4 +1,4 @@
-package fr.tdd.kata.bankaccount.domain;
+package fr.tdd.kata.bankaccount.usecases.tests;
 
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,7 +16,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import fr.tdd.kata.bankaccount.domain.model.Account;
 import fr.tdd.kata.bankaccount.domain.model.OperationType;
+import fr.tdd.kata.bankaccount.domain.model.Transaction;
 import fr.tdd.kata.bankaccount.domain.ports.StatementPrinter;
 import fr.tdd.kata.bankaccount.domain.ports.TransactionRepository;
 
