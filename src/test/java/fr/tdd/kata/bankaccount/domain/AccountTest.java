@@ -1,20 +1,36 @@
 package fr.tdd.kata.bankaccount.domain;
 
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import fr.tdd.kata.bankaccount.domain.model.OperationType;
+import fr.tdd.kata.bankaccount.domain.ports.StatementPrinter;
+import fr.tdd.kata.bankaccount.domain.ports.TransactionRepository;
+
+@RunWith(MockitoJUnitRunner.class)
 public class AccountTest {
 
+	private static final String TODAY = "22/10/2022";
 	private Account account;
+	@Mock private TransactionRepository transactionRepository;
+	@Mock private StatementPrinter statementPrinter;
 
 	@Before
 	public void initialise() {
-		account = new Account();
+		account = new Account(transactionRepository, statementPrinter);
 	}
 
 	@Test  
@@ -58,6 +74,16 @@ public class AccountTest {
 		BigDecimal withdrawAmount = new BigDecimal(150.00);
 		account.deposit(depositAmount);
 		account.withdraw(withdrawAmount);
+	}
+	
+	@Test
+	public void
+	should_print_a_statement_containing_all_transactions() {
+		BigDecimal depositAmount = new BigDecimal(100.00);
+		List<Transaction> transactions = Arrays.asList(new Transaction(TODAY,  depositAmount, OperationType.DEPOSIT));
+		given(transactionRepository.getTransactions()).willReturn(transactions);
+		account.printStatement();
+		verify(statementPrinter).print(transactions);
 	}
 
 }
