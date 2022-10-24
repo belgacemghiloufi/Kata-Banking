@@ -20,6 +20,7 @@ public class Account {
 		if (amount.signum() == -1)
 			throw new IllegalArgumentException(String.format("Should not deposit a negative amount: %s", amount));
 		balance = balance.add(amount);
+		transactionRepository.addTransaction(amount, OperationType.DEPOSIT);
 	}
 
 	public BigDecimal getBalance() {
@@ -32,6 +33,7 @@ public class Account {
 		if (balance.compareTo(amount) < 0)
 			throw new IllegalArgumentException(String.format("Should not withdraw amount %s more than balance %s", amount, balance));
 		balance = balance.subtract(amount);
+		transactionRepository.addTransaction(amount, OperationType.WITHDRAWAL);
 	}
 
 	public void printStatement() {

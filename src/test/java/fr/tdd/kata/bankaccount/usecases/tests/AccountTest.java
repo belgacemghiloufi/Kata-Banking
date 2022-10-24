@@ -40,6 +40,7 @@ public class AccountTest {
 	should_increase_balance_when_deposit_is_made() {
 		BigDecimal amount = new BigDecimal(100.00);
 		account.deposit(amount);
+		verify(transactionRepository).addTransaction(amount, OperationType.DEPOSIT);
 		assertThat(account.getBalance(), is(amount));
 	}
 	
@@ -58,9 +59,9 @@ public class AccountTest {
 		BigDecimal leftAmount = new BigDecimal(50.00);
 		account.deposit(depositAmount);
 		account.withdraw(withdrawAmount);
+		verify(transactionRepository).addTransaction(withdrawAmount, OperationType.WITHDRAWAL);
 		assertThat(account.getBalance(), is(leftAmount));
 	}
-	
 	
 	@Test(expected = IllegalArgumentException.class) 
 	public void
